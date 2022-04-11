@@ -1,0 +1,155 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
+        <style>
+          @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+          * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+          }
+          
+          body {
+          
+            font-family: "Poppins", sans-serif;
+          }
+          
+          header a {
+            text-decoration: none;
+          }
+          
+          header {
+            padding:20px;
+            background-color: white;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom:1px #070707 solid;
+            overflow: hidden;
+            width: 100%;
+            position: fixed;
+            color: black;
+          }
+          
+          #brand {
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+          }
+          #brand a{
+            color: black;
+          }
+          
+          ul {
+            list-style: none;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+          }
+          
+          ul a {
+            color: black;
+          }
+          
+          ul li {
+            padding: 5px;
+            margin-left: 10px;
+          }
+          
+          ul li:hover {
+            transform: scale(1.1);
+            transition: 0.3s;
+          }
+          
+          .container{
+          max-width: 700px;
+          margin: auto;
+          padding-top: 100px;
+          
+            }
+            @media only screen and (max-width: 600px) {
+              header nav {
+                font-size: 20px !important;
+                display: block;
+                width: fit-content;
+              }
+            
+              #hamburger-icon {
+                display: none;
+              }
+            }
+        </style>
+    </head>
+    <body>
+      
+        <section>
+            {% if post.post_pic %}
+            <div class="container">
+                <h2>{{ post.title}}</h2>
+                <p>{{ post.author}} {{ post.post_date}} . {{post.read}} min read &nbsp &nbsp
+              </p>
+
+                <img src="{{ post.post_pic.url }}" alt="no post pic" height="100%" width="100%">
+                <p>{{post.body | safe | linebreaks }}</p>
+                <br>
+                <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
+                
+            </div>
+            {% else %}
+            <div class="container">
+                <h2>{{ post.title}}</h2>
+                <p>{{ post.author}} {{ post.post_date}} . {{post.read}} min read &nbsp &nbsp
+              </p>
+                
+                <p>{{post.body | safe | linebreaks }}</p>
+            </div>
+
+            {% endif %}
+            
+            <!-- <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br><br><br> <br> <br> <br>  <hr> -->
+            
+
+          <center>
+            <form action="{% url 'like_post' post.pk %}" method="POST">
+              {% csrf_token %}
+          
+              {% if user.is_authenticated %}
+          
+                  {% if liked %}
+                      <button type="submit", name="post_id", value="{{post.id}}", class="btn btn-danger btn-sm">UnLike</button> 
+                  {% else %}    
+                      <button type="submit", name="post_id", value="{{post.id}}", class="btn btn-primary btn-sm" >Like</button>
+          
+                  {% endif %}
+          
+              {% else %}
+                  <small>Login in to Like <a href="{% url 'login' %}">Login</a></small>
+          
+              {% endif %}    
+                  - {{ total_likes }} Likes 
+            </form>
+            <br> <br>
+          </center>
+
+
+
+
+
+    </section>
+
+    </body>
+</html>
+{% endblock %}
+        

@@ -1,0 +1,60 @@
+{% include 'post/navbar.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+    .card img{
+      width:200px;
+      height:150px;
+    }
+    @media only screen and (max-width: 1200px) {
+    .card img{
+      height: 90px;
+      width: 90px;
+   }
+  }
+  </style>
+</head>
+<body>
+<div class="scroll">
+        {% for entry in blog_entry %}
+        {% if entry.post_pic %}
+        <div class="card-container">
+          <div class="float-layout">
+            <div class="card-image">
+            <div class="card">
+              <h1 style="padding-left:10px"><img src="{{entry.author.profile.image.url}}" style="height:25px;width:25px;border-radius: 50%;"></a> {{entry.author}}</h1>
+              <h4 style="padding-left:10px"><a href="{% url 'Detail_post' entry.pk %}" style="text-decoration: none;color:black;"> {{entry.title}}</a></h4>
+              <p style="padding-left:10px">{{entry.title_tag | truncatechars:50}}</p>
+              <a href="" style="padding-left:10px;color:black;text-decoration:none">{{entry.body | safe | truncatechars:50}}</a>
+              <img src="{{ entry.post_pic.url }}" >
+               <p style="padding-left:10px">{{ entry.post_date | date:'d-F-Y' }} . {{entry.read}} min read .  <a href="" style="color:black;text-decoration:none"> {{entry.category}}</p>
+              
+            </div>
+            </div>
+          </div>
+          </div>
+        {% else %}
+          <div class="card-container">
+            <div class="float-layout">
+              <div class="card">
+                <h1 style="padding-left:10px"><img src="{{entry.author.profile.image.url}}" style="height:25px;width:25px;border-radius: 50%;"></a> {{entry.author}}</h1>
+              <h4 style="padding-left:10px"><a href="{% url 'Detail_post' entry.pk %}" style="text-decoration: none;color:black;"> {{entry.title}}</a></h4>
+              <p style="padding-left:10px">{{entry.title_tag | truncatechars:50}}</p>
+              <a href="" style="padding-left:10px;color:black;text-decoration:none">{{entry.body | safe | truncatechars:50}}</a>
+              <p style="padding-left:10px">{{ entry.post_date | date:'d-F-Y' }} . {{entry.read}} min read .  <a href="" style="color:black;text-decoration:none"> {{entry.category}}</p>
+              
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% endfor %}       
+      </div>
+
+</body>
+</html>
+{% endblock %}

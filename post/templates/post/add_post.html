@@ -1,0 +1,58 @@
+<title>Create blog post </title> 
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'CSS/navbar.css' %}">
+    <style>
+        .col-md-2 .mb-3{
+            margin-left:-5vh;
+        }
+        form{
+            text-align: left;
+        }
+        footer h1{
+            text-align: center;
+            border-top:1px solid black;
+        }
+        
+        
+    </style>
+</head>
+<div class="container mt-5">
+<center>
+<h1>Write Post</h1>
+<br>
+
+<div class="form-group" >
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <button class="btn btn-primary ">Post</button>
+    </form>
+    </div>
+
+   
+</center>
+    <script>
+        var name = "{{user.id}}";
+        document.getElementById("user").value = name;
+    </script>
+    
+</div>
+</div>
+
+
+{% else %}
+You are not Logged in Click login<br> <br>
+
+<a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+
+
+{% endif %}
+{% endblock %}
+
+</footer>
